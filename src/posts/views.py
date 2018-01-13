@@ -58,7 +58,20 @@ def post_detail(request, username, pk):
     posts = Post.objects.filter(user=users[0], pk=pk)
     if len(posts) == 0:
         return render(request, "404.html")
-    return render(request, "post.html", {'post': posts[0], 'categories': posts[0].categories.all()})
+
+    post = posts[0]
+    if post.published_at is None and post.user != request.user:
+        return render(request, "404.html") # user can't see other user's drafts
+
+    if request.method == 'POST' and request.POST.get('publish') is not None and post.user == request.user:
+        post.published_at = datetime.now()
+        post.save()
+        messages.success(request, 'The post has been published!')
+    elif request.method == 'POST' and request.POST.get('delete') is not None and post.user == request.user:
+        post.delete()
+        messages.success(request, 'Deleted post')
+        return redirect("my_blog")
+    return render(request, "post.html", {'post': post, 'categories': posts[0].categories.all()})
 
 
 class CreatePostView(LoginRequiredMixin, View):

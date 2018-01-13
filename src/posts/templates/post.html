@@ -4,7 +4,19 @@
 
 {% block content %}
 
+  {% if post.user == user %}
+    <form method="post" style="align-self: flex-end; margin-bottom: 1em;">
+      {% csrf_token %}
+      {% if post.published_at == None %}
+        <button class="pure-button pure-button-primary" name="publish">Publish post</button>
+      {% endif %}
+      <button class="pure-button pure-button-error" name="delete">Delete post</button>
+    </form>
+  {% endif %}
   <article>
+    {% if post.published_at == None %}
+      <span style="color: gray">draft</span>
+    {% endif %}
     <h1>{{ post.title }}</h1>
     {% if post.image %}
       <img src="{{ post.image }}" alt="{{ post.title }}">
