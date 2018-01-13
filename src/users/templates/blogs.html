@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <h1>All blogs</h1>
+
+  <br>
+
+  {% for blog in blogs %}
+
+    <div>
+      <a href="{% url "user_posts" username=blog %}">@{{ blog }}</a>
+    </div>
+
+    <br>
+
+  {% endfor %}
+
+  <div>
+    {% if previousPage != '-1' %}
+      <a href="{% url "blogs" %}?page={{ previousPage }}"><i class="fas fa-angle-left"></i></a>
+    {% endif %}
+    {% if nextPage != '-1' %}
+      <a href="{% url "blogs" %}?page={{ nextPage }}"><i class="fas fa-angle-right"></i></a>
+    {% endif %}
+  </div>
+
+{% endblock %}

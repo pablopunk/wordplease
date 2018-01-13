@@ -3,59 +3,122 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-      <title>{% block head_title %} Wordplease - Recent posts {% endblock %}</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <title>{% block head_title %} Wordplease - Recent posts {% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
+          integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.4/js/all.js"></script>
     <style>
-      body {
-        margin: 0;
-        padding: 0;
-      }
-      header {
-        padding: 1em;
-        display: flex;
-        justify-content: start;
-        align-items: center;
-        background-color: whitesmoke;
-      }
-      header > * {
-        padding: 1em 2em;
-      }
-      main {
-        padding: 2em 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-      .right {
-        float: right;
-      }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: white !important;
+        }
+
+        header {
+            padding: 2em;
+        }
+
+        main {
+            padding: 2em 3em;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        article {
+            border: 1px solid #eaeaea;
+            border-radius: 5px;
+            width: 60%;
+            padding: 1em 2em;
+        }
+
+        article h1 {
+            color: royalblue;
+        }
+
+        article h2 {
+            color: #777;
+            font-weight: lighter;
+        }
+
+        article img {
+            width: 100%;
+        }
+
+        article small {
+            display: block;
+            color: lightblue;
+        }
+
+        article em {
+            margin-top: 1em;
+            display: block;
+            color: gray;
+        }
+
+        article p {
+            text-align: justify;
+        }
+
+        form label {
+            display: block;
+        }
+        form input {
+            width: 100%;
+        }
+
+        .message {
+            width: 100%;
+            margin: 1em;
+            padding: 1em;
+            background-color: whitesmoke;
+            color: royalblue;
+            border-radius: 5px;
+        }
+
+        .errorlist {
+            list-style: none;
+            color: orangered;
+            text-align: center;
+        }
+        
+        img {
+            border-radius: 3px;
+        }
     </style>
 </head>
 <body>
 
-  <header>
-    <a href="{% url "home" %}">Home</a>
-    {% if user.is_authenticated %}
-        <a href="{% url "my_blog" %}">My blog</a>
-        <a href="{% url "my_blog" %}">New</a>
-        <a class="right" href="{% url "logout" %}">Logout</a>
-    {% else %}
-      <a href="{% url "login" %}">Login</a>
-    {% endif %}
-  </header>
+<header>
+    <div class="pure-menu pure-menu-horizontal">
+        <a href="{% url "home" %}" class="pure-menu-heading pure-menu-link"><i class="fas fa-home"></i> Home</a>
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item"><a href="{% url "blogs" %}" class="pure-menu-link"><i class="far fa-list-alt"></i> All blogs</a></li>
+            {% if user.is_authenticated %}
+                <li class="pure-menu-item"><a href="{% url "my_blog" %}" class="pure-menu-link"><i class="fas fa-user-circle"></i> My blog</a></li>
+                <li class="pure-menu-item"><a href="{% url "new_post" %}" class="pure-menu-link"><i class="fas fa-file"></i> New</a></li>
+                <li class="pure-menu-item"><a href="{% url "logout" %}" class="pure-menu-link"><i class="fas fa-sign-out-alt"></i> Logout ({{ user.username }})</a></li>
+            {% else %}
+                <li class="pure-menu-item"><a href="{% url "login" %}" class="pure-menu-link"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                <li class="pure-menu-item"><a href="{% url "signup" %}" class="pure-menu-link"><i class="fab fa-wpforms"></i> Register</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</header>
 
-  {% if messages %}
+{% if messages %}
     {% for message in messages %}
         {% autoescape off %}
-            <div class="alert alert-success">{{ message }}</div>
+            <div class="message">{{ message }}</div>
         {% endautoescape %}
     {% endfor %}
 {% endif %}
 
-    <main>
-      {% block content %}{% endblock %}
-    </main>
+<main>
+    {% block content %}{% endblock %}
+</main>
 
 </body>
 </html>

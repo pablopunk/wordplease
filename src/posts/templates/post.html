@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block head_title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+
+  <article>
+    <h1>{{ post.title }}</h1>
+    {% if post.image %}
+      <img src="{{ post.image }}" alt="{{ post.title }}">
+    {% endif %}
+    <h2>by @{{ post.user }}</h2>
+    <small>
+      {{ categories|join:', ' }}
+    </small>
+    <em>
+      {{ post.abstract }}
+    </em>
+    <p>
+      {{ post.body }}
+    </p>
+
+  </article>
+
+{% endblock %}

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'wordplease',
     'posts',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -125,3 +126,4 @@ STATICFILES_DIRS = [
 ]
 
 LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'login'

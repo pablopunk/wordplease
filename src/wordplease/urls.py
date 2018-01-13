@@ -17,7 +17,8 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
 
-from posts.views import home, my_blog, user_posts
+from posts.views import home, my_blog, user_posts, CreatePostView, post_detail
+from users.views import blogs, signup
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,7 +27,11 @@ urlpatterns = [
 
     path('login', auth_views.login, {'template_name': 'login.html'}, name="login"),
     path('logout', auth_views.logout, {'next_page': '/'}, name="logout"),
+    path('signup', signup, name="signup"),
 
     path('my_blog', my_blog, name="my_blog"),
-    path('blogs/<username>', user_posts, name="user_posts")
+    path('blogs/<username>', user_posts, name="user_posts"),
+    path('blogs', blogs, name="blogs"),
+    path('new-post', CreatePostView.as_view(), name="new_post"),
+    path('blogs/<username>/<int:pk>', post_detail, name="post_detail"),
 ]

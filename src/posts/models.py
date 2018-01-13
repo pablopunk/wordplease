@@ -13,8 +13,8 @@ class Post(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    title = models.TextField()
-    abstract = models.TextField()
+    title = models.CharField(max_length=200)
+    abstract = models.CharField(max_length=500)
     body = models.TextField()
     image = models.URLField(blank=True)
     published_at = models.DateTimeField(blank=True, null=True)
@@ -22,7 +22,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
-    category = models.ForeignKey(Category, on_delete=models.PROTECT)
+    categories = models.ManyToManyField(Category)
 
     def __str__(self):
         return self.title

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block head_title %}New post{% endblock %}
+
+{% block content %}
+
+  <h1>New post</h1>
+
+  <form method="post" class="pure-form" novalidate>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="pure-button" name="draft">Save as draft</button>
+    <button class="pure-button pure-button-primary" name="publish">Publish</button>
+  </form>
+
+{% endblock %}

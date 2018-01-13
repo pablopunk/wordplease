@@ -1,7 +1,23 @@
-<hr>
+
+{% if not posts %}
+{% endif %}
+
 {% for post in posts %}
-    <div>
-    {{ post }}
-    </div>
-    <hr>
+    <article>
+        {% if post.published_at == None %}
+            <span style="color: gray">draft</span>
+        {% endif %}
+        <a style="text-decoration: none;" href="{% url "post_detail" username=post.user.username pk=post.pk %}">
+            <h1>{{ post }}
+                {% if post.image %}
+                    <img style="width: 150px; float: right" src="{{ post.image }}" alt="{{ post.title }}">
+                {% endif %}
+            </h1>
+        </a>
+    </article>
+    <br>
+{% empty %}
+    <p>
+        No posts yet
+    </p>
 {% endfor %}
