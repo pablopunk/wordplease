@@ -9,9 +9,6 @@ class UsersSerializer(serializers.Serializer):
     first_name = serializers.CharField()
     last_name = serializers.CharField()
 
-    def create(self, validated_data):
-        pass
-
 
 class UserSerializer(UsersSerializer):
     username = serializers.CharField()
@@ -37,3 +34,23 @@ class UserSerializer(UsersSerializer):
         instance.set_password(validated_data.get("password"))
         instance.save()
         return instance
+
+
+def get_blog_relative_url(self):
+    return "/blogs/{0}".format(self.username)
+
+def get_blog_name(self):
+    return self.username
+
+# Add methods to User class
+User.add_to_class('get_blog_relative_url', get_blog_relative_url)
+User.add_to_class('get_blog_name', get_blog_name)
+
+
+class BlogsSerializer(serializers.ModelSerializer):
+    name = serializers.URLField(source='get_blog_name')
+    url = serializers.URLField(source='get_blog_relative_url')
+
+    class Meta:
+        model = User
+        fields = ['name', 'url']

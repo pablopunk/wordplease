@@ -18,8 +18,9 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 
 from posts.views import home, my_blog, user_posts, CreatePostView, post_detail
-from users.api import UsersListAPI, UserDetailAPI
+from users.api import UsersListAPI, UserDetailAPI, BlogsListAPI
 from users.views import blogs, signup
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -38,4 +39,5 @@ urlpatterns = [
 
     path('api/1.0/users', UsersListAPI.as_view(), name="api_users"),
     path('api/1.0/users/<int:pk>', UserDetailAPI.as_view(), name="api_user"),
+    path('api/1.0/blogs', BlogsListAPI.as_view(), name="api_blogs"),
 ]
