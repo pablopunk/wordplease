@@ -26,7 +26,7 @@ class BlogsListAPI(ListAPIView):
     queryset = User.objects.all()
     serializer_class = BlogsSerializer
     filter_backends = (OrderingFilter, )
-    ordering = ('username', )
+    ordering_fields = ('username', )
 
     def get_queryset(self):
         queryset = User.objects.all()

@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 # Create your views here.
 from users.forms import SignUpForm
 
-pagination = 5
+pagination = 7
 
 
 def blogs(request):
@@ -17,7 +17,7 @@ def blogs(request):
     page = int(page)
 
     from_n = pagination * page
-    to_n = from_n + pagination + 1
+    to_n = from_n + pagination
     users = User.objects.all()
     usersCount = users.count()
 
