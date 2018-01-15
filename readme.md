@@ -10,26 +10,61 @@
 
 ### Examples
 
-* Get list of users
+#### Get list of users (requires superuser authentication)
 
 `GET /api/1.0/users`
 
-* Get user details (requires authentication)
+#### Create an user
+
+```
+POST /api/1.0/users
+{
+  "username": "mscott",
+  "first_name": "Michael",
+  "last_name": "Scott",
+  "email": "mscott@dundermifflin.com",
+  "password": "ilovepaper"
+}
+```
+
+#### Delete an user (requires superuser or authentication)
+
+`DELETE /api/1.0/users/<id>`
+
+#### Get user details (requires authentication)
 
 `GET /api/1.0/users/<id>`
 
-* Get list of blogs
+#### Get list of blogs
 
 `GET /api/1.0/blogs`
 
-* Get list of posts in a blog (requires authentication for drafts)
+  - *Optional*: Search by name (`?name=<term>`)
+  - *Optional*: Order by `username` (`?ordering=username`)
+
+#### Get list of posts in a blog (requires authentication for drafts)
 
 `GET /api/1.0/blogs/<name>`
 
-* Create post (requires authentication)
+  - *Optional*: Search by title and content (`?search=<term>`)
+  - *Optional*: Order by `published_at` or `title` (`?ordering=<choice>`)
 
-`POST /api/1.0/posts/create`
-
-* Get post details (requires authentication for drafts):
+#### Get post details (requires authentication for drafts):
 
 `GET /api/1.0/posts/<id>`
+
+#### Delete post (requires authentication)
+
+`DELETE /api/1.0/posts/<id>`
+
+#### Create post (requires authentication)
+
+```
+POST /api/1.0/posts/create
+{
+  "title": "My first post",
+  "abstract": "This is my first post",
+  "image": "http://some-url.com/image.jpg",
+  "body": "Lorem ipsum..."
+}
+```
